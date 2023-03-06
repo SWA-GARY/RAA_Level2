@@ -51,15 +51,21 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Classes\ButtonDataClass.cs" />
-    <Compile Include="Command 02.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Command02.cs" />
+    <Compile Include="Forms\MyDataForm.xaml.cs">
+      <DependentUpon>MyDataForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MyForm2.xaml.cs">
       <DependentUpon>MyForm2.xaml</DependentUpon>
     </Compile>
@@ -87,13 +93,17 @@
     <EmbeddedResource Include="Resources\Blue_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Forms\MyForm2.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Forms\MyDataForm.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\MyForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\MyForm2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

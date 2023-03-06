@@ -27,6 +27,7 @@ namespace RAA_Level2
             InitializeComponent();
         }
 
+        bool locationset = false;
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -39,6 +40,7 @@ namespace RAA_Level2
             {
                 
                 inputBox.Text = openFile.FileName;
+               
                 
             }
             else
@@ -50,8 +52,13 @@ namespace RAA_Level2
 
         private void okBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            this.Close();   
+            if (locationset==true)
+            {
+                this.DialogResult = true;
+                this.Close();
+            }
+            else
+                this.Close();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

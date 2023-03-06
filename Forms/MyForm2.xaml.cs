@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,34 +17,66 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
+
 namespace RAA_Level2
 {
     /// <summary>
     /// Interaction logic for Window.xaml
     /// </summary>
+    
     public partial class MyForm2 : Window
     {
-        public MyForm2()
+        public Document MyDoc;
+        public List<Element> listref;
+        public MyForm2(Document doc,List<Reference> selectionList)
         {
             InitializeComponent();
+            MyDoc = doc;
+            for(int i = 1; i <=20; i++) 
+            {
+                StartNumber.Items.Add(i.ToString());
+            }
+            StartNumber.SelectedIndex = 0;
+            if(selectionList != null)
+            {
+                ListBox.Items.Clear();
+                listref = new List<Element>();
+
+                foreach (Reference SelectRef in selectionList)
+                {
+                    Element curElem = doc.GetElement(SelectRef);
+                    
+                    if (curElem is Viewport)
+                    {
+                        listref.Add(curElem);
+                        Parameter NameParam = curElem.get_Parameter(BuiltInParameter.VIEWPORT_VIEW_NAME);
+                        Parameter NumParam = curElem.get_Parameter(BuiltInParameter.VIEWPORT_DETAIL_NUMBER);
+                        ListBox.Items.Add(NameParam.AsString() + ":" + NumParam.AsString());
+                       //ListBox.Items.Add(curElem.Id.ToString());
+                    }
+                }
+
+
+
+                
+
+
+            }
+            
+            
+            
         }
+        
+        
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Select_Click(object sender, RoutedEventArgs e)
         {
-            //load csv file
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.RestoreDirectory= true;
-            openFile.Filter = "csv files(*.csv)|*.csv";
+            this.DialogResult = true;
+            
 
-            if (openFile.ShowDialog() == true)
-            {
-                inputBox.Text = openFile.FileName;
 
-            }
-            else
-            {
-                inputBox.Text = "";
-            }
+
+
 
         }
 
@@ -58,26 +92,37 @@ namespace RAA_Level2
             this.Close();
         }
 
-        //parameters
-        public string GetTextBoxValue()
-        {
-            return inputBox.Text;
+
+
+
+        internal List<Element> GetSelectedView()
+        { 
+            if (listref != null)
+            
+                return listref;
+               else
+                    return null;
+           
         }
 
-        public bool GetLevelBox() 
+        internal int GetStartnumber()
         {
-            if (level_box.IsChecked == true)
-                return true;
-            else
-                return false;
-            
+            string selectednumber = StartNumber.SelectedItem.ToString();
+            int returnValue=Convert.ToInt32(selectednumber);
+            return returnValue;
         }
-        public bool GetceilingBox()
-        {
-            if(ceiling_box.IsChecked == true) 
-                return true;
-            else
-                return false;
-        }
+
+        //internal renumberviews(List<Element> ShowViews, int CurNum)
+        //{
+           
+        //     foreach (Element el in ShowViews)
+        //    {
+        //        Parameter viewnumber = el.get_Parameter(BuiltInParameter.VIEWPORT_DETAIL_NUMBER);
+        //        viewnumber.Set(CurNum.ToString() + "z");
+        //        CurNum++;
+               
+        //    }
+        //    return CurNum++;
+        //}
     }
 }

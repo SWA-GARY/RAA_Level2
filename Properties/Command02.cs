@@ -15,7 +15,7 @@ using System.Reflection;
 namespace RAA_Level2
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command_02 : IExternalCommand
+    public class Command02 : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
