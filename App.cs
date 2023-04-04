@@ -31,7 +31,7 @@ namespace RAA_Level2
             RibbonPanel panel = Utils.CreateRibbonPanel(app, "Revit Add-in Academy", "Revit Tools");
 
             // 3. Create button data instances
-            ButtonDataClass myButtonData = new ButtonDataClass("MyButton", "create levels", Command.GetMethod(), Properties.Resources.Blue_32, Properties.Resources.Blue_16, "This is a tooltip");
+            ButtonDataClass myButtonData = new ButtonDataClass("MyButton", "create levels", Com_LevelsSheets.GetMethod(), Properties.Resources.Blue_32, Properties.Resources.Blue_16, "This is a tooltip");
             ButtonDataClass myButtonData2 = new ButtonDataClass("MyButton2", "renumber views", Command02.GetMethod(), Properties.Resources.Green_32, Properties.Resources.Green_16, "This is a tooltip");
             // 4. Create buttons
             PushButton myButton = panel.AddItem(myButtonData.Data) as PushButton;

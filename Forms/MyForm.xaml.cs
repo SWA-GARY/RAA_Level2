@@ -40,8 +40,8 @@ namespace RAA_Level2
             {
                 
                 inputBox.Text = openFile.FileName;
-               
-                
+                locationset = true;
+
             }
             else
             {

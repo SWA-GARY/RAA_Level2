@@ -26,13 +26,19 @@
 
         <Label Grid.Row="0" FontSize="36" Grid.ColumnSpan="3" >RENUMBER</Label>
         <TextBlock Grid.Row="1" Grid.ColumnSpan="2" FontSize="14">Click select and pick views to renumber</TextBlock>
-        <ListBox x:Name="ListBox" Grid.Row="2" Grid.ColumnSpan="2" IsEnabled="False" >Display ids of selected elements</ListBox>
+        <ListBox x:Name="ListBox" Grid.Row="2" Grid.ColumnSpan="2" IsEnabled="True" >Display ids of selected elements</ListBox>
         <Button x:Name="SelectButton" Grid.Row="2" Grid.Column="3" Click="Select_Click">Select</Button>
         
 
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" Orientation="Vertical">
             <TextBlock Grid.Row="3" Grid.Column="0" Text="select start number"/>
             <ComboBox x:Name="StartNumber" Grid.Row="3" Text="1"/>
+            
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Vertical">
+            <TextBlock Grid.Row="4" Grid.Column="2" Text="Custom start number"/>
+            <TextBox x:Name="CustomNum" Grid.Row="4" Grid.Column="2" Text="1"/>
         </StackPanel>
         
         <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="2">

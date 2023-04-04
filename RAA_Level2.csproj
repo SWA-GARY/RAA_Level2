@@ -61,7 +61,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Classes\ButtonDataClass.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="Com_LevelsSheets.cs" />
+    <Compile Include="Com_sheetCreater.cs" />
+    <Compile Include="Com_skills04.cs" />
     <Compile Include="Command02.cs" />
     <Compile Include="Forms\MyDataForm.xaml.cs">
       <DependentUpon>MyDataForm.xaml</DependentUpon>

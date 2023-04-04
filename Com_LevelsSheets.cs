@@ -15,7 +15,7 @@ using System.Reflection;
 namespace RAA_Level2
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command : IExternalCommand
+    public class Com_LevelsSheets : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -42,8 +42,9 @@ namespace RAA_Level2
            
             //VARIABLES
             int FLOORNUMBER = 0;
+            int RCPNUMBER = 0;
             int plannumber = 100;
-            int RCPnumber = 200;
+            int RCPpageNumber = 200;
             XYZ insertPoint = new XYZ(2, 1, 0);
             XYZ secondInsertPoint = new XYZ(0, 1, 0);
             //VARIABLES - plan types 
@@ -83,7 +84,7 @@ namespace RAA_Level2
             
 
             Transaction t = new Transaction(doc);
-            t.Start("Create level and sheet");
+            t.Start("Create levels");
 
             foreach (string[] CellString in Datalist)
             {
@@ -94,35 +95,75 @@ namespace RAA_Level2
 
                 double TrueNumber=0;
 
-                //create levels
-                
-                
-
-                
-                // CREATE FLOOR PLANS
-                if (currentForm.GetLevelBox() == true)
+                //set units
+                if (currentForm.GetMBox() == true)
                 {
+                    // metric
+                    double metricConvert = 0;
+                    double.TryParse(MElevation, out metricConvert);
+                    TrueNumber = metricConvert * 3.28084;
+                }
+                else
+                {
+                    //imperial
                     bool ConvertNumber = double.TryParse(Elevation, out TrueNumber);
                     if (ConvertNumber == false)
                     {
                         TaskDialog.Show("error", "cant read some elevation check file formating");
                         continue;
                     }
+                }
+                //create levels
 
-                    double LevelHeight = TrueNumber;
-                    Level mylevel = Level.Create(doc, LevelHeight);
-                    mylevel.Name = LevelName;
+                
+
+                double LevelHeight = TrueNumber;
+                Level mylevel = Level.Create(doc, LevelHeight);
+                mylevel.Name = LevelName;
+
+
+                // CREATE FLOOR PLANS
+                if (currentForm.GetLevelBox() == true)
+                {
+                   
 
                     ViewPlan planview = ViewPlan.Create(doc, planVFT.Id, mylevel.Id);
                     FLOORNUMBER++;
                     planview.Name = (FLOORNUMBER.ToString() + " FLOOR PLAN");
 
-                    ViewSheet newSheet = ViewSheet.Create(doc, tblockId);
-                    newSheet.Name = planview.Name;
-                    //plannumber++;
-                    newSheet.SheetNumber = ("A" + plannumber++.ToString());
+                    
 
-                    Viewport newViewPort = Viewport.Create(doc, newSheet.Id, planview.Id, insertPoint);
+                    if(currentForm.GetSheetsBox()== true)
+                    {
+                        ViewSheet newSheet = ViewSheet.Create(doc, tblockId);
+                        newSheet.Name = planview.Name;
+                        //plannumber++;
+                        newSheet.SheetNumber = ("A" + plannumber++.ToString());
+
+                        Viewport newViewPort = Viewport.Create(doc, newSheet.Id, planview.Id, insertPoint);
+                    }
+                }
+
+                // CREATE RCP PLANS
+                if (currentForm.GetceilingBox() == true)
+                {
+                    
+
+                    ViewPlan planview = ViewPlan.Create(doc, ceilingPlanVFT.Id, mylevel.Id);
+                    
+                    planview.Name = (RCPNUMBER++.ToString() + " RCP PLAN");
+
+                    if (currentForm.GetSheetsBox() == true)
+                    {
+                        ViewSheet newSheet = ViewSheet.Create(doc, tblockId);
+                        newSheet.Name = planview.Name;
+                        //plannumber++;
+                        newSheet.SheetNumber = ("A" + RCPpageNumber++.ToString());
+
+                        Viewport newViewPort = Viewport.Create(doc, newSheet.Id, planview.Id, insertPoint);
+                    }
+
+
                 }
             }
             t.Commit();
@@ -152,7 +193,7 @@ namespace RAA_Level2
             return null;
         }
 
-
+        
         public static String GetMethod()
         {
             var method = MethodBase.GetCurrentMethod().DeclaringType?.FullName;

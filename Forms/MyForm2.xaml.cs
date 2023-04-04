@@ -32,11 +32,13 @@ namespace RAA_Level2
         {
             InitializeComponent();
             MyDoc = doc;
-            for(int i = 1; i <=20; i++) 
+            for (int i = 1; i <= 20; i++)
             {
                 StartNumber.Items.Add(i.ToString());
             }
             StartNumber.SelectedIndex = 0;
+            CustomNum.Text="0";
+
             if(selectionList != null)
             {
                 ListBox.Items.Clear();
@@ -107,9 +109,19 @@ namespace RAA_Level2
 
         internal int GetStartnumber()
         {
-            string selectednumber = StartNumber.SelectedItem.ToString();
-            int returnValue=Convert.ToInt32(selectednumber);
-            return returnValue;
+            if (CustomNum.Text =="0")
+            {
+                string selectednumber = StartNumber.SelectedItem.ToString();
+                int returnValue = Convert.ToInt32(selectednumber);
+                return returnValue;
+           }
+            else
+            {
+                string selectednumber2 = CustomNum.Text;
+                int returnValue2 = Convert.ToInt32(selectednumber2);
+                return returnValue2;
+            }
+            
         }
 
         //internal renumberviews(List<Element> ShowViews, int CurNum)
